@@ -3,19 +3,19 @@ require 'attr_encrypted'
 class Secret
   extend AttrEncrypted
   attr_reader :password
-  attr_encrypted :ssn, key: :password
+  attr_encrypted :message, key: :password
 
   def self.load
     self.new.tap do |secret|
-      secret.encrypted_ssn = File.read('data/encrypted_ssn')
-      secret.encrypted_ssn_iv = File.read('data/encrypted_ssn_iv')
+      secret.encrypted_message = File.read('data/encrypted_message')
+      secret.encrypted_message_iv = File.read('data/encrypted_message_iv')
     end
   end
 
   def save
     raise "Requires Key" unless password
-    File.write('data/encrypted_ssn', encrypted_ssn)
-    File.write('data/encrypted_ssn_iv', encrypted_ssn_iv)
+    File.write('data/encrypted_message', encrypted_message)
+    File.write('data/encrypted_message_iv', encrypted_message_iv)
   end
 
   def password=(text)
