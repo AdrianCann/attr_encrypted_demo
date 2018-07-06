@@ -7,15 +7,15 @@ class Secret
 
   def self.load
     self.new.tap do |secret|
-      secret.encrypted_message = File.read('data/encrypted_message')
-      secret.encrypted_message_iv = File.read('data/encrypted_message_iv')
+      secret.encrypted_message = File.read('data/encrypted_message.txt').force_encoding(Encoding::ASCII_8BIT)
+      secret.encrypted_message_iv = File.read('data/encrypted_message_iv.txt').force_encoding(Encoding::ASCII_8BIT)
     end
   end
 
   def save
     raise "Requires Key" unless password
-    File.write('data/encrypted_message', encrypted_message)
-    File.write('data/encrypted_message_iv', encrypted_message_iv)
+    File.write('data/encrypted_message.txt', encrypted_message)
+    File.write('data/encrypted_message_iv.txt', encrypted_message_iv)
   end
 
   def password=(text)
