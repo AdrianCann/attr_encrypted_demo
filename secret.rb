@@ -1,6 +1,6 @@
 require 'attr_encrypted'
 
-class User
+class Secret
   extend AttrEncrypted
   attr_accessor :name
   attr_encrypted :ssn, key: 'This is a key that is 256 bits!!'
