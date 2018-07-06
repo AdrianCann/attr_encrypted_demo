@@ -2,8 +2,8 @@ require 'attr_encrypted'
 
 class Secret
   extend AttrEncrypted
-  attr_accessor :name
-  attr_encrypted :ssn, key: 'This is a key that is 256 bits!!'
+  attr_accessor :password
+  attr_encrypted :ssn, key: :password
 
   def self.load
     self.new.tap do |secret|
@@ -13,6 +13,7 @@ class Secret
   end
 
   def save
+    raise "Requires Key" unless password
     File.write('data/encrypted_ssn', encrypted_ssn)
     File.write('data/encrypted_ssn_iv', encrypted_ssn_iv)
   end
